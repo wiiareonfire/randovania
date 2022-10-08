@@ -353,6 +353,7 @@ _MIGRATIONS = [
     _migrate_v23,  # add require_documentation_above
     _migrate_v24,
     _migrate_v25,  # flatten_to_set_on_patch
+    lambda it: it,  # RemoteActivationNode added
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 
