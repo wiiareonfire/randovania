@@ -1,0 +1,193 @@
+{
+    "schema_version": 15,
+    "info": {
+        "randovania_version": "5.5.0.dev103",
+        "randovania_version_git": "4850cfd6",
+        "permalink": "DabMJ5cbrUhQz9YJYoZdf0LkHjhWADED",
+        "has_spoiler": true,
+        "seed": 123567344,
+        "hash": "ZQTZOG5N",
+        "word_hash": "Range Armadillo Spider",
+        "presets": [
+            {
+                "schema_version": 45,
+                "base_preset_uuid": null,
+                "name": "Door Rando",
+                "uuid": "4d924770-213d-4aad-b5f9-98db38190e39",
+                "description": "A preset that was customized.",
+                "game": "blank",
+                "configuration": {
+                    "trick_level": {
+                        "minimal_logic": false,
+                        "specific_levels": {}
+                    },
+                    "starting_location": [
+                        {
+                            "world_name": "Intro",
+                            "area_name": "Starting Area",
+                            "node_name": "Spawn Point"
+                        }
+                    ],
+                    "available_locations": {
+                        "randomization_mode": "full",
+                        "excluded_indices": []
+                    },
+                    "major_items_configuration": {
+                        "items_state": {
+                            "Weapon": {
+                                "num_shuffled_pickups": 1,
+                                "included_ammo": [
+                                    5
+                                ]
+                            },
+                            "Explosive": {
+                                "num_shuffled_pickups": 1
+                            },
+                            "Blue Key": {
+                                "num_shuffled_pickups": 1
+                            }
+                        },
+                        "default_items": {},
+                        "minimum_random_starting_items": 0,
+                        "maximum_random_starting_items": 0
+                    },
+                    "ammo_configuration": {
+                        "items_state": {
+                            "Missile Expansion": {
+                                "ammo_count": [
+                                    5
+                                ],
+                                "pickup_count": 1,
+                                "requires_major_item": true
+                            }
+                        }
+                    },
+                    "damage_strictness": 1.5,
+                    "pickup_model_style": "all-visible",
+                    "pickup_model_data_source": "etm",
+                    "logical_resource_action": "randomly",
+                    "first_progression_must_be_local": false,
+                    "minimum_available_locations_for_hint_placement": 0,
+                    "minimum_location_weight_for_hint_placement": 0.0,
+                    "dock_rando": {
+                        "mode": "two-way",
+                        "types_state": {
+                            "door": {
+                                "can_change_from": [
+                                    "Back-Only Door",
+                                    "Blue Key Door",
+                                    "Explosive Door",
+                                    "Locked Door",
+                                    "Normal Door"
+                                ],
+                                "can_change_to": [
+                                    "Back-Only Door",
+                                    "Blue Key Door",
+                                    "Explosive Door",
+                                    "Locked Door",
+                                    "Normal Door"
+                                ]
+                            },
+                            "other": {
+                                "can_change_from": [],
+                                "can_change_to": []
+                            }
+                        }
+                    },
+                    "single_set_for_pickups_that_solve": false,
+                    "staggered_multi_pickup_placement": false,
+                    "include_extra_pickups": false
+                }
+            }
+        ]
+    },
+    "game_modifications": [
+        {
+            "game": "blank",
+            "starting_equipment": {
+                "pickups": []
+            },
+            "starting_location": "Intro/Starting Area/Spawn Point",
+            "teleporters": {},
+            "dock_weakness": {
+                "Intro/Starting Area/Door to Boss Arena": {
+                    "type": "door",
+                    "name": "Normal Door"
+                },
+                "Intro/Starting Area/Door to Explosive Depot": {
+                    "type": "door",
+                    "name": "Normal Door"
+                },
+                "Intro/Starting Area/Door to Back-Only Lock Room": {
+                    "type": "door",
+                    "name": "Blue Key Door"
+                },
+                "Intro/Starting Area/Door to Blue Key Room (Exit)": {
+                    "type": "door",
+                    "name": "Locked Door"
+                },
+                "Intro/Starting Area/Door to Blue Key Room (Entrance)": {
+                    "type": "door",
+                    "name": "Normal Door"
+                },
+                "Intro/Boss Arena/Door to Starting Area": {
+                    "type": "door",
+                    "name": "Normal Door"
+                },
+                "Intro/Explosive Depot/Door to Starting Area": {
+                    "type": "door",
+                    "name": "Normal Door"
+                },
+                "Intro/Explosive Depot/Door to Hint Room": {
+                    "type": "door",
+                    "name": "Explosive Door"
+                },
+                "Intro/Back-Only Lock Room/Door to Starting Area": {
+                    "type": "door",
+                    "name": "Blue Key Door"
+                },
+                "Intro/Blue Key Room/Door to Starting Area (Exit)": {
+                    "type": "door",
+                    "name": "Locked Door"
+                },
+                "Intro/Blue Key Room/Door to Starting Area (Entrance)": {
+                    "type": "door",
+                    "name": "Normal Door"
+                },
+                "Intro/Hint Room/Door to Explosive Depot": {
+                    "type": "door",
+                    "name": "Explosive Door"
+                }
+            },
+            "configurable_nodes": {},
+            "locations": {
+                "Intro": {
+                    "Back-Only Lock Room/Pickup (Extra Key)": "Explosive",
+                    "Blue Key Room/Pickup (Blue Key)": "Blue Key",
+                    "Explosive Depot/Pickup (Explosive)": "Weapon",
+                    "Starting Area/Pickup (Missile Expansion)": "Victory Key",
+                    "Starting Area/Pickup (Weapon)": "Missile Expansion"
+                }
+            },
+            "hints": {
+                "Intro/Hint Room/Hint no Translator": {
+                    "hint_type": "joke",
+                    "precision": null,
+                    "target": null,
+                    "dark_temple": null
+                },
+                "Intro/Hint Room/Hint with Translator": {
+                    "hint_type": "joke",
+                    "precision": null,
+                    "target": null,
+                    "dark_temple": null
+                }
+            }
+        }
+    ],
+    "item_order": [
+        "Weapon at Intro/Explosive Depot/Pickup (Explosive)",
+        "Missile Expansion at Intro/Starting Area/Pickup (Weapon)",
+        "Victory Key at Intro/Starting Area/Pickup (Missile Expansion)"
+    ]
+}
