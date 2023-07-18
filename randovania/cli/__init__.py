@@ -28,7 +28,7 @@ def _print_version(args):
 def _create_parser():
     parser = argparse.ArgumentParser()
 
-    create_subparsers(parser.add_subparsers(dest="game"))
+    create_subparsers(parser.add_subparsers())
     parser.add_argument("--version", action="store_const", const=_print_version, dest="func")
     parser.add_argument(
         "--configuration", type=Path, help="Use the given configuration path instead of the included one."

@@ -96,5 +96,5 @@ def add_generate_commands(sub_parsers):
         "generate-from-presets", help="Generate a layout from a list of presets."
     )
     common_generate_arguments(parser_presets)
-    permalink_command.add_permalink_arguments(parser_presets)
+    permalink_command.add_permalink_arguments(parser_presets, False)
     parser_presets.set_defaults(func=generate_from_preset_logic)
