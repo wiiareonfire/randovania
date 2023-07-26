@@ -166,7 +166,7 @@ class SelectPresetWidget(QtWidgets.QWidget, Ui_SelectPresetWidget):
         old_preset = self._current_preset_data.get_preset()
         if self._current_preset_data.is_included_preset:
             parent_uuid = old_preset.uuid
-            old_preset = old_preset.fork()
+            old_preset = dataclasses.replace(old_preset.fork(), summary="")
         else:
             parent_uuid = self._options.get_parent_for_preset(old_preset.uuid)
 

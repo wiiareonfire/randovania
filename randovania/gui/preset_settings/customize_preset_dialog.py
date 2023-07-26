@@ -82,6 +82,7 @@ class CustomizePresetDialog(QtWidgets.QDialog, Ui_CustomizePresetDialog):
                 self.main_tab_widget.setTabVisible(i, tab_widget.count() > 0)
 
         self.name_edit.textEdited.connect(self._edit_name)
+        self.summary_edit.textChanged.connect(self._edit_summary)
         self.description_edit.textChanged.connect(self._edit_description)
         self.button_box.accepted.connect(self.accept)
         self.button_box.rejected.connect(self.reject)
@@ -105,6 +106,7 @@ class CustomizePresetDialog(QtWidgets.QDialog, Ui_CustomizePresetDialog):
     # Options
     def on_preset_changed(self, preset: Preset):
         common_qt_lib.set_edit_if_different(self.name_edit, preset.name)
+        common_qt_lib.set_edit_if_different(self.summary_edit, preset.summary)
         common_qt_lib.set_edit_if_different_text(self.description_edit, preset.description)
         if (tab := self.current_preset_tab) is not None:
             tab.on_preset_changed(preset)
@@ -112,6 +114,10 @@ class CustomizePresetDialog(QtWidgets.QDialog, Ui_CustomizePresetDialog):
     def _edit_name(self, value: str):
         with self._editor as editor:
             editor.name = value
+
+    def _edit_summary(self):
+        with self._editor as editor:
+            editor.summary = self.summary_edit.toPlainText()
 
     def _edit_description(self):
         with self._editor as editor:

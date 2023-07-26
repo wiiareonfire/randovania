@@ -29,6 +29,7 @@ class PresetEditor:
     _name: str
     _uuid: uuid.UUID
     _game: RandovaniaGame
+    _summary: str
     _description: str
     _configuration: BaseConfiguration
 
@@ -36,6 +37,7 @@ class PresetEditor:
         self._name = initial_preset.name
         self._uuid = initial_preset.uuid
         self._game = initial_preset.game
+        self._summary = initial_preset.summary
         self._description = initial_preset.description
         self._configuration = initial_preset.configuration
         self._options = options
@@ -66,6 +68,7 @@ class PresetEditor:
     def create_custom_preset_with(self) -> Preset:
         return Preset(
             name=self.name,
+            summary=self._summary,
             description=self._description,
             uuid=self._uuid,
             game=self._game,
@@ -86,11 +89,19 @@ class PresetEditor:
         return self._game
 
     @property
-    def description(self):
+    def summary(self) -> str:
+        return self._summary
+
+    @summary.setter
+    def summary(self, value: str):
+        self._set_field("summary", value)
+
+    @property
+    def description(self) -> str:
         return self._description
 
     @description.setter
-    def description(self, value):
+    def description(self, value: str):
         self._set_field("description", value)
 
     @property

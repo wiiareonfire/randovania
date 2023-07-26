@@ -18,6 +18,7 @@ if TYPE_CHECKING:
 class Preset(BitPackValue):
     name: str
     uuid: uuid_module.UUID
+    summary: str
     description: str
     game: RandovaniaGame
     configuration: BaseConfiguration
@@ -27,6 +28,7 @@ class Preset(BitPackValue):
         return {
             "name": self.name,
             "uuid": str(self.uuid),
+            "summary": self.summary,
             "description": self.description,
             "game": self.game.value,
             "configuration": self.configuration.as_json,
@@ -38,6 +40,7 @@ class Preset(BitPackValue):
         return Preset(
             name=value["name"],
             uuid=uuid_module.UUID(value["uuid"]),
+            summary=value["summary"],
             description=value["description"],
             game=game,
             configuration=game.data.layout.configuration.from_json(value["configuration"]),
@@ -67,6 +70,7 @@ class Preset(BitPackValue):
 
         return Preset(
             name=f"{game.long_name} Custom",
+            summary="",
             description="A customized preset.",
             uuid=uuid_module.uuid4(),
             game=reference.game,

@@ -62,6 +62,13 @@ class VersionedPreset:
             return self.data["name"]
 
     @property
+    def summary(self) -> str:
+        if self._preset is not None:
+            return self._preset.summary
+        else:
+            return self.data.get("summary", "")
+
+    @property
     def game(self) -> RandovaniaGame:
         if self._preset is not None:
             return self._preset.configuration.game

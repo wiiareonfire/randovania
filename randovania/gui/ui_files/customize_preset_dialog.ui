@@ -52,25 +52,42 @@
        <string>Game Modifications</string>
       </attribute>
      </widget>
-	 <widget class="QWidget" name="description_tab_widget">
+     <widget class="QWidget" name="description_tab_widget">
       <attribute name="title">
        <string>Preset Description</string>
       </attribute>
-	  <layout class="QVBoxLayout" name="description_layout">
-       <item>
+      <layout class="QGridLayout" name="description_tab_layout">
+       <item row="0" column="0">
+        <widget class="QLabel" name="summary_label">
+         <property name="text">
+          <string>Summary</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QLineEdit" name="summary_edit">
+         <property name="maxLength">
+          <number>40</number>
+         </property>
+         <property name="placeholderText">
+          <string>Short summary that shows up in a Multiworld Sesssion</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0" colspan="2">
         <widget class="QLabel" name="description_label">
          <property name="text">
           <string>Enter a description for your preset below.</string>
          </property>
-		 <property name="wordWrap">
+         <property name="wordWrap">
           <bool>true</bool>
          </property>
         </widget>
        </item>
-       <item>
+       <item row="2" column="0" colspan="2">
         <widget class="QTextEdit" name="description_edit"/>
        </item>
-      </layout>	  
+      </layout>
      </widget>
     </widget>
    </item>
