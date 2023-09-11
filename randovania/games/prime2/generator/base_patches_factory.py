@@ -107,8 +107,8 @@ class EchoesBasePatchesFactory(BasePatchesFactory):
             assert len(light_portals) == len(dark_portals)
             rng.shuffle(light_portals)
             rng.shuffle(dark_portals)
-            dock_assignment.extend(zip(light_portals, dark_portals))
-            dock_assignment.extend(zip(dark_portals, light_portals))
+            dock_assignment.extend(zip(light_portals, dark_portals, strict=True))
+            dock_assignment.extend(zip(dark_portals, light_portals, strict=True))
 
         yield from dock_assignment
 

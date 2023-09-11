@@ -358,7 +358,7 @@ class AM2RPatchDataFactory(PatchDataFactory):
         # Shuffle DNA hints
         hint_texts = list(dna_hint_mapping.values())
         rng.shuffle(hint_texts)
-        dna_hint_mapping = dict(zip(artifacts, hint_texts))
+        dna_hint_mapping = dict(zip(artifacts, hint_texts, strict=True))
 
         septogg_hints = {}
         gm_newline = "#-#"

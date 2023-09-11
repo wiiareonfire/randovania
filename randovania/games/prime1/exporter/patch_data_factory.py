@@ -475,7 +475,7 @@ def _serialize_dock_modifications(
                 assert len(candidates) % 2 == 0
 
                 if max_index < -0.00001:
-                    raise Exception(f"Failed to find pairings for {str(candidates)}")
+                    raise Exception(f"Failed to find pairings for {candidates!s}")
 
                 (src_name, src_dock) = next_candidate(max_index)
 
@@ -858,7 +858,7 @@ class PrimePatchDataFactory(PatchDataFactory):
 
         SUIT_ATTRIBUTES = ["powerDeg", "variaDeg", "gravityDeg", "phazonDeg"]
         suit_colors = {}
-        for attribute, hue_rotation in zip(SUIT_ATTRIBUTES, self.cosmetic_patches.suit_color_rotations):
+        for attribute, hue_rotation in zip(SUIT_ATTRIBUTES, self.cosmetic_patches.suit_color_rotations, strict=True):
             if hue_rotation != 0:
                 suit_colors[attribute] = hue_rotation
 
