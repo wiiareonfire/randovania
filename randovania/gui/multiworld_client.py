@@ -129,89 +129,97 @@ class MultiworldClient(QtCore.QObject):
             worlds=frozendict(sync_requests),
         )
 
-    async def _server_sync(self):
-        while True:
-            # Wait a bit, in case a RemoteConnector is sending multiple events in quick succession
-            await asyncio.sleep(1)
+    async def _server_sync_single_step(self) -> bool:
+        """Single loop iteration for _server_sync. When return is true, loop should continue."""
 
-            if self._ignore_last_sync:
-                self._ignore_last_sync = False
-                self._last_sync = ServerSyncRequest(worlds=frozendict({}))
+        # Wait a bit, in case a RemoteConnector is sending multiple events in quick succession
+        await asyncio.sleep(1)
 
-            request = self._create_new_sync_request()
-            if request == self._last_sync:
-                self.logger.debug("Skipping server sync: no changes from last time")
-                return
+        if self._ignore_last_sync:
+            self._ignore_last_sync = False
+            self._last_sync = ServerSyncRequest(worlds=frozendict({}))
 
-            for uid, world_request in request.worlds.items():
-                self.logger.debug(
-                    "Syncing %s: State %s, collected %s", uid, world_request.status, world_request.collected_locations
-                )
+        request = self._create_new_sync_request()
+        if request == self._last_sync:
+            self.logger.debug("Skipping server sync: no changes from last time")
+            return False
 
-            try:
-                result = await self.network_client.perform_world_sync(request)
-
-            except (UnableToConnect, error.RequestTimeoutError, error.UnsupportedClientError) as e:
-                self._update_sync_exception(e)
-                self.logger.info("Can't sync worlds: Unable to connect to server: %s", e)
-                await asyncio.sleep(15)
-                continue
-
-            except (error.NotLoggedInError, error.InvalidSessionError) as e:
-                self._update_sync_exception(e)
-                self.logger.info("Can't sync worlds: Not logged in")
-                await asyncio.sleep(30)
-                continue
-
-            except Exception as e:
-                self._update_sync_exception(e)
-                self.logger.exception("Unexpected error syncing worlds: %s", e)
-                await asyncio.sleep(15)
-                continue
-
-            self._last_sync_exception = None
-            modified_data: dict[uuid.UUID, WorldData] = {}
-
-            def get_data(u: uuid.UUID):
-                if u not in modified_data:
-                    modified_data[u] = self.database.get_data_for(u)
-                return modified_data[u]
-
-            for uid, world in request.worlds.items():
-                if uid in result.errors:
-                    continue
-
-                self._last_reported_status[uid] = world.status
-                self._world_sync_errors.pop(uid, None)
-                if world.collected_locations:
-                    modified_data[uid] = get_data(uid).extend_uploaded_locations(world.collected_locations)
-
-            for uid, world in result.worlds.items():
-                modified_data[uid] = dataclasses.replace(
-                    get_data(uid),
-                    server_data=WorldServerData(
-                        world_name=world.world_name,
-                        session_id=world.session_id,
-                        session_name=world.session_name,
-                    ),
-                )
-                self._worlds_with_details.add(uid)
-
-            self._last_sync = ServerSyncRequest(
-                worlds=frozendict([(uid, world) for uid, world in request.worlds.items() if uid not in result.errors])
+        for uid, world_request in request.worlds.items():
+            self.logger.debug(
+                "Syncing %s: State %s, collected %s", uid, world_request.status, world_request.collected_locations
             )
 
-            if result.errors:
-                for uid, err in result.errors.items():
-                    self.logger.info("When syncing %s, received %s", uid, err)
-                    self._world_sync_errors[uid] = err
-                self.SyncFailure.emit()
+        try:
+            result = await self.network_client.perform_world_sync(request)
 
-            if modified_data:
-                await self.database.set_many_data(modified_data)
+        except (UnableToConnect, error.RequestTimeoutError, error.UnsupportedClientError) as e:
+            self._update_sync_exception(e)
+            self.logger.info("Can't sync worlds: Unable to connect to server: %s", e)
+            await asyncio.sleep(15)
+            return True
 
-            # Wait a bit, and try sending a new request in case new data came while waiting for the server response
-            await asyncio.sleep(4)
+        except (error.NotLoggedInError, error.InvalidSessionError) as e:
+            self._update_sync_exception(e)
+            self.logger.info("Can't sync worlds: Not logged in")
+            await asyncio.sleep(30)
+            return True
+
+        except Exception as e:
+            self._update_sync_exception(e)
+            self.logger.exception("Unexpected error syncing worlds: %s", e)
+            await asyncio.sleep(15)
+            return True
+
+        self._last_sync_exception = None
+        modified_data: dict[uuid.UUID, WorldData] = {}
+
+        def get_data(u: uuid.UUID):
+            if u not in modified_data:
+                modified_data[u] = self.database.get_data_for(u)
+            return modified_data[u]
+
+        for uid, world in request.worlds.items():
+            if uid in result.errors:
+                continue
+
+            self._last_reported_status[uid] = world.status
+            self._world_sync_errors.pop(uid, None)
+            if world.collected_locations:
+                modified_data[uid] = get_data(uid).extend_uploaded_locations(world.collected_locations)
+
+        for uid, world in result.worlds.items():
+            modified_data[uid] = dataclasses.replace(
+                get_data(uid),
+                server_data=WorldServerData(
+                    world_name=world.world_name,
+                    session_id=world.session_id,
+                    session_name=world.session_name,
+                ),
+            )
+            self._worlds_with_details.add(uid)
+
+        self._last_sync = ServerSyncRequest(
+            worlds=frozendict([(uid, world) for uid, world in request.worlds.items() if uid not in result.errors])
+        )
+
+        if result.errors:
+            for uid, err in result.errors.items():
+                self.logger.info("When syncing %s, received %s", uid, err)
+                self._world_sync_errors[uid] = err
+            self.SyncFailure.emit()
+
+        if modified_data:
+            await self.database.set_many_data(modified_data)
+
+        # Wait a bit, and try sending a new request in case new data came while waiting for the server response
+        await asyncio.sleep(4)
+
+        return True
+
+    async def _server_sync(self):
+        while await self._server_sync_single_step():
+            # Keep retrying _server_sync_single_step until it tells us not to
+            pass
 
     def start_server_sync_task(self):
         if self._sync_task is not None and not self._sync_task.done():
