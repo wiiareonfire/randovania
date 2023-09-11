@@ -41,8 +41,8 @@ JOKE_HINTS = [
     ),
     (
         "*Ancient tongue, non-decipherable. The contents in full:#"
-        "ＮＡＧＧＩＮＧＳ　ＦＲＯＭ　ＰＡＳＴ ＳＯ#"
-        "ＮＯＷ　ＩＭ　ＨＥＬＰＩＮＧ　ＶＩＡ　ＤＥＶ#"
-        "ＡＬＡＳ　ＧＬＡＤ　ＦＯＲ　ＹＥ*"
+        "ＮＡＧＧＩＮＧＳ　ＦＲＯＭ　ＰＡＳＴ ＳＯ#"  # noqa: RUF001
+        "ＮＯＷ　ＩＭ　ＨＥＬＰＩＮＧ　ＶＩＡ　ＤＥＶ#"  # noqa: RUF001
+        "ＡＬＡＳ　ＧＬＡＤ　ＦＯＲ　ＹＥ*"  # noqa: RUF001
     ),
 ]
