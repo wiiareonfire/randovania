@@ -226,7 +226,7 @@ class CSMusic(BitPackDataclass, JsonDataclass):
 @dataclasses.dataclass(frozen=True)
 class CSCosmeticPatches(BaseCosmeticPatches):
     mychar: MyChar = MyChar.QUOTE
-    music_rando: CSMusic = CSMusic.default()
+    music_rando: CSMusic = dataclasses.field(default_factory=CSMusic.default)
 
     @classmethod
     def default(cls) -> CSCosmeticPatches:
