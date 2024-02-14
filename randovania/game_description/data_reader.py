@@ -30,6 +30,7 @@ from randovania.game_description.game_description import GameDescription, IndexW
 from randovania.game_description.requirements.node_requirement import NodeRequirement
 from randovania.game_description.requirements.requirement_and import RequirementAnd
 from randovania.game_description.requirements.requirement_or import RequirementOr
+from randovania.game_description.requirements.requirement_reference import RequirementReference
 from randovania.game_description.requirements.requirement_template import RequirementTemplate
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.resources import search
@@ -151,6 +152,10 @@ def read_requirement_template(data: dict, resource_database: ResourceDatabase) -
     return RequirementTemplate(data["data"])
 
 
+def read_requirement_reference(data: dict, resource_database: ResourceDatabase) -> RequirementReference:
+    return RequirementReference(tuple(NodeIdentifier.from_json(it) for it in data["data"]))
+
+
 def read_node_requirement(data: dict, resource_database: ResourceDatabase) -> NodeRequirement:
     return NodeRequirement(NodeIdentifier.from_json(data["data"]))
 
@@ -171,6 +176,9 @@ def read_requirement(data: dict, resource_database: ResourceDatabase) -> Require
 
     elif req_type == "node":
         return read_node_requirement(data, resource_database)
+
+    elif req_type == "reference":
+        return read_requirement_reference(data, resource_database)
 
     else:
         raise ValueError(f"Unknown requirement type: {req_type}")
