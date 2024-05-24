@@ -112,6 +112,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: Incorrect shield texture for vertical **Power Beam Only** doors
 - Fixed: Elite Research - Stuttering when loading the room
 - Fixed: Mine Security Station - Wave Pirates not dropping down if the player didn't skip the cutscene immediately
+- Fixed: Artifact Temple - Indestructible totems if the player fights Ridley without collecting all optional artifacts
 - Fixed: Reactor Core - Escape music restarting when leaving the room after Parasite Queen has been killed
 - Fixed: Furnace - Ghost elements re-appearing when re-entering the room from East Furnace Access
 - Fixed: Main Plaza - Door background texture not rendering on the correct side
