@@ -72,7 +72,8 @@ class AM2RBootstrap(MetroidBootstrap):
         self, configuration: BaseConfiguration, db: ResourceDatabase, current_resources: ResourceCollection
     ):
         num_suits = sum(
-            (1 if current_resources[db.get_item_by_name(suit)] else 0) for suit in ("Varia Suit", "Gravity Suit")
+            (1 if current_resources[db.get_item_by_display_name(suit)] else 0)
+            for suit in ("Varia Suit", "Gravity Suit")
         )
         if num_suits <= 0:
             dr = 0
