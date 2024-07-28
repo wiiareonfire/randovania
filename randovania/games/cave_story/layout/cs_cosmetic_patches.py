@@ -84,6 +84,7 @@ class MusicRandoType(BitPackEnum, Enum):
                 "For example, teleporting to the Egg Corridor plays *Charge*, "
                 "but entering Egg Corridor from Cthulhu's Abode plays *Run!*"
             )
+        return None
 
 
 @unique

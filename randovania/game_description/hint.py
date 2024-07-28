@@ -134,9 +134,8 @@ class Hint(JsonDataclass):
         elif self.hint_type is HintType.LOCATION:
             if self.target is None:
                 raise ValueError("Location Hint, but no target set.")
-        elif self.hint_type is HintType.RED_TEMPLE_KEY_SET:
-            if self.dark_temple is None:
-                raise ValueError("Dark Temple Hint, but no dark_temple set.")
+        elif self.hint_type is HintType.RED_TEMPLE_KEY_SET and self.dark_temple is None:
+            raise ValueError("Dark Temple Hint, but no dark_temple set.")
 
     @classmethod
     def from_json(cls, json_dict: dict, **extra: typing.Any) -> typing.Self:

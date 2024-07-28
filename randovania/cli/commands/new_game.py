@@ -347,7 +347,7 @@ def update_pyuic(enum_value: str) -> None:
     if not any(it == new_entry for it in pyuic["files"]):
         pyuic["files"].append(new_entry)
 
-    pyuic["files"] = [pyuic["files"][0]] + sorted(pyuic["files"][1:])
+    pyuic["files"] = [pyuic["files"][0], *sorted(pyuic["files"][1:])]
 
     json_lib.write_path(pyuic_path, pyuic)
 

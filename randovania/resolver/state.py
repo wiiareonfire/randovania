@@ -165,7 +165,7 @@ class State:
 
         return State(
             new_resources,
-            self.collected_resource_nodes + (node,),
+            (*self.collected_resource_nodes, node),
             energy,
             self.node,
             self.patches,

@@ -107,6 +107,7 @@ class ResourceDatabaseGenericModel(QtCore.QAbstractTableModel):
         elif role == Qt.ItemDataRole.DisplayRole:
             if index.column() == 0:
                 return "New..."
+            return None
         else:
             return ""
 

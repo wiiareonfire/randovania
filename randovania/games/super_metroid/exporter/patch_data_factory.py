@@ -68,7 +68,7 @@ def sm_pickup_details_to_patcher(detail: pickup_exporter.ExportedPickupDetails) 
 
     item_name = _mapping.get(pickup_type, pickup_type)
 
-    result = {
+    return {
         "item_name": item_name,
         "quantity_given": count,
         "pickup_effect": _effect[item_name],
@@ -77,18 +77,16 @@ def sm_pickup_details_to_patcher(detail: pickup_exporter.ExportedPickupDetails) 
         "owner_name": None,
     }
 
-    return result
 
 
 def sm_starting_items_to_patcher(item: ItemResourceInfo, quantity: int) -> dict:
     item_name = _mapping.get(item.long_name, item.long_name)
     quantity *= _multiplier_for_item.get(item_name, 1)
-    result = {
+    return {
         "item_name": item_name,
         "quantity_given": quantity,
         "pickup_effect": _effect[item_name],
     }
-    return result
 
 
 class SuperMetroidPatchDataFactory(PatchDataFactory):

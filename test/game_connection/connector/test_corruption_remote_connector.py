@@ -11,8 +11,7 @@ from randovania.game_connection.executor.memory_operation import MemoryOperation
 
 @pytest.fixture(name="connector")
 def corruption_remote_connector():
-    connector = CorruptionRemoteConnector(dol_versions.ALL_VERSIONS[0], AsyncMock())
-    return connector
+    return CorruptionRemoteConnector(dol_versions.ALL_VERSIONS[0], AsyncMock())
 
 
 @pytest.mark.parametrize("correct_vtable", [False, True])

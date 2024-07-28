@@ -155,6 +155,7 @@ class PrimeGameExportDialog(GameExportDialog, MultiFormatOutputMixin, Ui_PrimeGa
     def echoes_file(self) -> Path | None:
         if self._use_echoes_models:
             return Path(self.echoes_file_edit.text())
+        return None
 
     @property
     def auto_save_spoiler(self) -> bool:

@@ -73,6 +73,7 @@ class PrimePresetDescriber(GamePresetDescriber):
                 return None
             elif diff_xyz:
                 return "Enemies will be stretched randomly"
+            return None
 
         if configuration.enemy_attributes is not None:
             enemy_rando_range_scale = attribute_in_range(

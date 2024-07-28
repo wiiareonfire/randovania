@@ -426,6 +426,7 @@ def admin_session(sa: ServerApp, session_id: int, action: str, *args):
         _set_allow_everyone_claim(sa, session, *args)
 
     session_common.emit_session_meta_update(session)
+    return None
 
 
 def _kick_user(sa: ServerApp, session: MultiplayerSession, membership: MultiplayerMembership, user_id: int):

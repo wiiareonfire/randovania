@@ -20,8 +20,7 @@ def dread_remote_connector():
     executor_mock.layout_uuid_str = "00000000-0000-1111-0000-000000000000"
     executor_mock.signals = MagicMock(ExecutorToConnectorSignals)
     executor_mock.version = "2.1.0"
-    connector = DreadRemoteConnector(executor_mock)
-    return connector
+    return DreadRemoteConnector(executor_mock)
 
 
 async def test_general_class_content(connector: DreadRemoteConnector):
@@ -74,10 +73,7 @@ async def test_new_inventory_received(connector: DreadRemoteConnector):
     items = [item for item in connector.game.resource_database.item if "item_id" in item.extra]
     inventory = [0] * len(items)
     inventory[1] = 1
-    connector.new_inventory_received(json.dumps({
-        "index": 69,
-        "inventory": inventory
-    }))
+    connector.new_inventory_received(json.dumps({"index": 69, "inventory": inventory}))
     assert connector.inventory_index == 69
 
     # check wide beam

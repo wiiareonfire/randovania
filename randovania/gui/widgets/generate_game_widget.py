@@ -137,7 +137,7 @@ class GenerateGameWidget(QtWidgets.QWidget, Ui_GenerateGameWidget):
                 default_button=async_dialog.StandardButton.No,
             )
             if result != async_dialog.StandardButton.Yes:
-                return
+                return None
 
         while True:
             try:
@@ -186,10 +186,10 @@ class GenerateGameWidget(QtWidgets.QWidget, Ui_GenerateGameWidget):
                 raise RetryGeneration
             else:
                 self._background_task.progress_update_signal.emit("Solver Error", 0)
-                return
+                return None
 
         except asyncio.exceptions.CancelledError:
-            return
+            return None
 
         except Exception as e:
             return await self.failure_handler.handle_exception(e, self._background_task.progress_update_signal.emit)
@@ -197,6 +197,7 @@ class GenerateGameWidget(QtWidgets.QWidget, Ui_GenerateGameWidget):
         self._background_task.progress_update_signal.emit(f"Success! (Seed hash: {layout.shareable_hash})", 100)
         persist_layout(self._options.game_history_path, layout)
         self._window_manager.open_game_details(layout)
+        return None
 
     def on_options_changed(self, options: Options) -> None:
         self.select_preset_widget.on_options_changed(options)

@@ -29,7 +29,7 @@ def is_dna_node(node: PickupNode, config: BaseConfiguration) -> bool:
             and artifact_config.prefer_emmi
             or
             # or not an emmi but with major boss option
-            not node.extra["pickup_type"] == "emmi"
+            node.extra["pickup_type"] != "emmi"
             and artifact_config.prefer_major_bosses
         )
     )

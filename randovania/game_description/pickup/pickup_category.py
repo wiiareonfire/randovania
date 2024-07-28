@@ -25,7 +25,7 @@ class PickupCategory:
             long_name=value["long_name"],
             hint_details=frozen_lib.wrap(value["hint_details"]),
             hinted_as_major=value["hinted_as_major"],
-            is_key=value["is_key"] if "is_key" in value else False,
+            is_key=value.get("is_key", False),
         )
 
     @property

@@ -120,13 +120,11 @@ class HistoryFilterModel(QtCore.QSortFilterProxyModel):
         def get_column(i):
             return model.itemData(model.index(source_row, i)).get(0, "")
 
-        if self.provider_filter is not None:
-            if self.provider_filter != get_column(0):
-                return False
+        if self.provider_filter is not None and self.provider_filter != get_column(0):
+            return False
 
-        if self.receiver_filter is not None:
-            if self.receiver_filter != get_column(1):
-                return False
+        if self.receiver_filter is not None and self.receiver_filter != get_column(1):
+            return False
 
         if not self.generic_filter:
             return True
@@ -333,7 +331,7 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
     @asyncSlot(MultiplayerSessionEntry)
     async def on_meta_update(self, session: MultiplayerSessionEntry):
         if session.id != self.game_session_api.current_session_id:
-            return
+            return None
 
         if hasattr(self, "_session"):
             self._old_session = self._session
@@ -354,6 +352,7 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
         self.update_multiworld_client_status()
         self.everyone_can_claim_check.setChecked(session.allow_everyone_claim_world)
         self.everyone_can_claim_check.setEnabled(self.users_widget.is_admin())
+        return None
 
     @asyncSlot(MultiplayerSessionActions)
     async def on_actions_update(self, actions: MultiplayerSessionActions):
@@ -381,7 +380,7 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
 
     async def _on_kicked(self):
         if self._already_kicked:
-            return
+            return None
         self._already_kicked = True
         leave_session = self.network_client.listen_to_session(self._session.id, False)
         if self._session.users:
@@ -683,14 +682,13 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
 
     async def generate_game(self, spoiler: bool, retries: int | None):
         not_ready_users = [user for user in self._session.users.values() if not user.ready]
-        if not_ready_users:
-            if not await async_dialog.yes_no_prompt(
-                self,
-                "User not Ready",
-                "The following users are not ready. Do you want to continue generating a game?\n\n"
-                + ", ".join(user.name for user in not_ready_users),
-            ):
-                return
+        if not_ready_users and not await async_dialog.yes_no_prompt(
+            self,
+            "User not Ready",
+            "The following users are not ready. Do you want to continue generating a game?\n\n"
+            + ", ".join(user.name for user in not_ready_users),
+        ):
+            return None
 
         await async_dialog.warning(
             self,
@@ -710,7 +708,7 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
 
     async def generate_game_with_permalink(self, permalink: Permalink, retries: int | None):
         if not await self._check_dangerous_presets(permalink):
-            return
+            return None
 
         if self.has_background_process:
             return async_dialog.warning(
@@ -818,10 +816,9 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
         return True
 
     def _check_for_unsupported_games(self, presets: list[Preset]) -> list[str]:
-        unsupported_games = sorted(
+        return sorted(
             {preset.game.data.long_name for preset in presets if preset.game not in self._session.allowed_games}
         )
-        return unsupported_games
 
     async def _show_dialog_for_unsupported_games(self, unsupported_games: list[str]) -> None:
         unsupported_games_str = ", ".join(unsupported_games)
@@ -930,6 +927,8 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
         description = await self.game_session_api.request_layout_description(self._session.worlds)
         if description is not None:
             self._window_manager.open_game_details(description, self._get_world_names())
+            return None
+        return None
 
     @asyncSlot()
     async def copy_permalink(self):
@@ -1145,3 +1144,4 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
 
         self.tracker_windows[(world_uid, user_id)] = tracker_window
         await self.network_client.world_track_inventory(world_uid, user_id, True)
+        return None

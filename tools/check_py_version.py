@@ -9,8 +9,7 @@ REQUIRED_WORD_SIZE_BITS = 64
 
 
 def version_str(major, minor, bits):
-    version = "Python %d.%d (%d-bit)" % (major, minor, bits)
-    return version
+    return "Python %d.%d (%d-bit)" % (major, minor, bits)
 
 
 major = sys.version_info.major

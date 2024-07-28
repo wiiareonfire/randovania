@@ -102,10 +102,7 @@ def exheader_validation(path: Path | None) -> bool:
         return True
     assert path is not None
     with path.open("rb") as exheader:
-        if b"MATADORA" not in exheader.read(8):
-            return True
-        else:
-            return False
+        return b"MATADORA" not in exheader.read(8)
 
 
 class MSRGameExportDialog(GameExportDialog, Ui_MSRGameExportDialog):

@@ -211,7 +211,7 @@ async def test_interact_with_game(connector: Prime1RemoteConnector, depth: int, 
     else:
         connector._send_next_pending_message.assert_not_awaited()
 
-    if 0 < depth:
+    if depth > 0:
         assert connector._last_emitted_region is not None
     else:
         assert connector._last_emitted_region is None

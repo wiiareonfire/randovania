@@ -31,9 +31,8 @@ def is_boss_location(node: PickupNode, config: BaseConfiguration) -> bool:
     assert isinstance(config, EchoesConfiguration)
     mode = config.sky_temple_keys
     boss = node.extra.get("boss")
-    if boss is not None:
-        if boss == "guardian" or mode == LayoutSkyTempleKeyMode.ALL_BOSSES:
-            return True
+    if boss is not None and (boss == "guardian" or mode == LayoutSkyTempleKeyMode.ALL_BOSSES):
+        return True
 
     return False
 

@@ -196,7 +196,7 @@ class QtNetworkClient(QtCore.QObject, NetworkClient):
                 is_password=True,
             )
             if password is None:
-                return
+                return None
         else:
             password = None
 

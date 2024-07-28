@@ -136,7 +136,7 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
         self.dock_incompatible_list.setItemDelegate(self.dock_incompatible_model.delegate)
         self.dock_incompatible_list.setModel(self.dock_incompatible_model)
         self.dock_type_combo.clear()
-        for i, dock_type in enumerate(game.dock_weakness_database.dock_types):
+        for _i, dock_type in enumerate(game.dock_weakness_database.dock_types):
             self.dock_type_combo.addItem(dock_type.long_name, userData=dock_type)
         refresh_if_needed(self.dock_type_combo, self.on_dock_type_combo)
 

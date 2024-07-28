@@ -97,9 +97,8 @@ def leave_room(sa: ServerApp, session_id: int):
     flask_socketio.leave_room(room_name_for(session_id))
 
     with sa.session() as sio_session:
-        if "multiplayer_sessions" in sio_session:
-            if session_id in sio_session["multiplayer_sessions"]:
-                sio_session["multiplayer_sessions"].remove(session_id)
+        if "multiplayer_sessions" in sio_session and session_id in sio_session["multiplayer_sessions"]:
+            sio_session["multiplayer_sessions"].remove(session_id)
 
 
 def leave_all_rooms(sa: ServerApp):

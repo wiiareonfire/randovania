@@ -88,7 +88,7 @@ class ServerApp:
     @property
     def request_sid(self):
         try:
-            return getattr(flask.request, "sid")
+            return flask.request.sid
         except AttributeError:
             return flask.session["sid"]
 
@@ -129,7 +129,7 @@ class ServerApp:
     def on(self, message: str, handler, namespace=None, *, with_header_check: bool = False):
         @functools.wraps(handler)
         def _handler(*args):
-            setattr(flask.request, "message", message)
+            flask.request.message = message
 
             if len(args) == 1 and isinstance(args, tuple) and isinstance(args[0], list):
                 args = args[0]
@@ -202,7 +202,7 @@ class ServerApp:
                         if user is None or (need_admin and not user.admin):
                             return "User not authorized", 403
                     else:
-                        user = list(User.select().limit(1))[0]
+                        user = next(iter(User.select().limit(1)))
 
                     return handler(user, **kwargs)
 

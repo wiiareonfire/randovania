@@ -160,10 +160,7 @@ def decode_single(
 
     initial_pickup_assignment = all_pools[player_index].assignment
 
-    if "custom_patcher_data" in game_modifications:
-        custom_patcher_data = game_modifications["custom_patcher_data"]
-    else:
-        custom_patcher_data = []
+    custom_patcher_data = game_modifications.get("custom_patcher_data", [])
 
     game_specific = game_modifications["game_specific"]
 
@@ -196,8 +193,7 @@ def decode_single(
         return result
 
     def get_dock_target(ni: NodeIdentifier):
-        result = game.region_list.node_by_identifier(ni)
-        return result
+        return game.region_list.node_by_identifier(ni)
 
     dock_connections = [
         (

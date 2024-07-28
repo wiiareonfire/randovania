@@ -78,8 +78,7 @@ class AM2RBootstrap(MetroidBootstrap):
             dr = configuration.first_suit_dr
         if num_suits == 2:
             dr = configuration.second_suit_dr
-        damage_reduction = 1 - (dr / 100)
-        return damage_reduction
+        return 1 - (dr / 100)
 
     def patch_resource_database(self, db: ResourceDatabase, configuration: BaseConfiguration) -> ResourceDatabase:
         return dataclasses.replace(db, base_damage_reduction=partial(self._damage_reduction, configuration))

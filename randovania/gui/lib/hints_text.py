@@ -15,14 +15,13 @@ def prime1_hint_text():
 
     artifact = artifacts.create_artifact(0, 0, db)
 
-    result = [
+    return [
         (
             "Artifact",
             artifact.pickup_category,
             artifact.broad_category,
         )
     ]
-    return result
 
 
 def prime2_hint_text():
@@ -60,14 +59,13 @@ def prime3_hint_text():
 
     cell = energy_cells.create_energy_cell(0, db)
 
-    result = [
+    return [
         (
             "Energy Cell",
             cell.pickup_category,
             cell.broad_category,
         )
     ]
-    return result
 
 
 _GAME_SPECIFIC = {
@@ -146,10 +144,7 @@ def update_hint_locations(game: RandovaniaGame, hint_tree_widget: QtWidgets.QTre
             for node in area.nodes:
                 if isinstance(node, HintNode):
                     used_hint_kind.add(node.kind)
-                    if "translator" in node.extra:
-                        hint_types[node.kind] = node.extra["translator"]
-                    else:
-                        hint_types[node.kind] = "✓"
+                    hint_types[node.kind] = node.extra.get("translator", "✓")
 
             if hint_types:
                 hint_type_tree[region.correct_name(area.in_dark_aether)][area.name] = hint_types

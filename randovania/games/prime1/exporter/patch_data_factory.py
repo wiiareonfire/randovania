@@ -561,6 +561,7 @@ def _serialize_dock_modifications(
                                 if name in list(component):
                                     return i
                                 i += 1
+                            return None
 
                         # randomly pick two room pairs which are not members of the same strongly connected
                         # component and # put back into pool for re-randomization (cross fingers that they

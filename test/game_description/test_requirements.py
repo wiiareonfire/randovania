@@ -259,8 +259,7 @@ def test_set_dangerous_resources(database):
 
 def test_requirement_as_set_0(database):
     def _req(name: str):
-        id_req = ResourceRequirement.simple(database.get_item(name))
-        return id_req
+        return ResourceRequirement.simple(database.get_item(name))
 
     expected = RequirementSet(
         [
@@ -280,8 +279,7 @@ def test_requirement_as_set_0(database):
 
 def test_requirement_as_set_1(database):
     def _req(name: str):
-        id_req = ResourceRequirement.simple(database.get_item(name))
-        return id_req
+        return ResourceRequirement.simple(database.get_item(name))
 
     expected = RequirementSet(
         [
@@ -304,8 +302,7 @@ def test_requirement_as_set_1(database):
 
 def test_requirement_as_set_2(database):
     def _req(name: str):
-        id_req = ResourceRequirement.simple(database.get_item(name))
-        return id_req
+        return ResourceRequirement.simple(database.get_item(name))
 
     expected = RequirementSet(
         [
@@ -324,8 +321,7 @@ def test_requirement_as_set_2(database):
 
 def test_requirement_as_set_3(database):
     def _req(name: str):
-        id_req = ResourceRequirement.simple(database.get_item(name))
-        return id_req
+        return ResourceRequirement.simple(database.get_item(name))
 
     expected = RequirementSet(
         [
@@ -344,8 +340,7 @@ def test_requirement_as_set_3(database):
 
 def test_requirement_as_set_4(database):
     def _req(name: str):
-        id_req = ResourceRequirement.simple(database.get_item(name))
-        return id_req
+        return ResourceRequirement.simple(database.get_item(name))
 
     expected = RequirementSet(
         [
@@ -368,8 +363,7 @@ def test_requirement_as_set_4(database):
 
 def test_requirement_as_set_5(database):
     def _req(name: str):
-        id_req = ResourceRequirement.simple(database.get_item(name))
-        return id_req
+        return ResourceRequirement.simple(database.get_item(name))
 
     expected = RequirementSet(
         [
@@ -389,8 +383,7 @@ def test_requirement_as_set_5(database):
 
 def test_requirement_as_set_6(database):
     def _req(name: str):
-        id_req = ResourceRequirement.simple(database.get_item(name))
-        return id_req
+        return ResourceRequirement.simple(database.get_item(name))
 
     expected = RequirementSet(
         [
@@ -420,8 +413,7 @@ def test_requirement_as_set_6(database):
 
 def test_requirement_and_str(database):
     def _req(name: str):
-        id_req = ResourceRequirement.simple(database.get_item(name))
-        return id_req
+        return ResourceRequirement.simple(database.get_item(name))
 
     req = RequirementAnd(
         [
@@ -435,8 +427,7 @@ def test_requirement_and_str(database):
 
 def test_requirement_or_str(database):
     def _req(name: str):
-        id_req = ResourceRequirement.simple(database.get_item(name))
-        return id_req
+        return ResourceRequirement.simple(database.get_item(name))
 
     req = RequirementOr(
         [
@@ -482,8 +473,7 @@ def test_trivial_requirement_str():
 
 def test_simplified_requirement(database):
     def _req(name: str):
-        id_req = ResourceRequirement.simple(database.get_item(name))
-        return id_req
+        return ResourceRequirement.simple(database.get_item(name))
 
     test_parameters = [
         (
@@ -652,8 +642,7 @@ def test_requirement_template(database):
 
 def test_requirement_template_nested(database):
     def _req(name: str):
-        id_req = ResourceRequirement.simple(database.get_item(name))
-        return id_req
+        return ResourceRequirement.simple(database.get_item(name))
 
     # Setup
     use_a = RequirementTemplate("Use A")

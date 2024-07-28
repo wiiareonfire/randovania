@@ -99,13 +99,11 @@ class MSRHintNamer(HintNamer):
 
     def format_region(self, location: PickupLocation, with_color: bool) -> str:
         region_list = default_database.game_description_for(location.game).region_list
-        result = region_list.region_name_from_node(region_list.node_from_pickup_index(location.location), True)
-        return result
+        return region_list.region_name_from_node(region_list.node_from_pickup_index(location.location), True)
 
     def format_area(self, location: PickupLocation, with_region: bool, with_color: bool) -> str:
         region_list = default_database.game_description_for(location.game).region_list
-        result = _area_name(region_list, region_list.node_from_pickup_index(location.location), not with_region)
-        return result
+        return _area_name(region_list, region_list.node_from_pickup_index(location.location), not with_region)
 
     def format_player(self, name: str, with_color: bool) -> str:
         return name

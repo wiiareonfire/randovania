@@ -43,7 +43,7 @@ class CorruptionLayoutEditor(QtWidgets.QWidget, Ui_CorruptionLayoutEditor):
         nodes_to_merge: list[PickupNode] = []
 
         region_count = 0
-        for i, region in enumerate(region_list.regions):
+        for _i, region in enumerate(region_list.regions):
             if region.extra["asset_id"] in ids_to_merge:
                 nodes_to_merge.extend(
                     node for area in region.areas for node in area.nodes if isinstance(node, PickupNode)

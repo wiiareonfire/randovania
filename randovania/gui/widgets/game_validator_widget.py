@@ -54,6 +54,7 @@ class GameValidatorWidget(QtWidgets.QWidget, Ui_GameValidatorWidget):
     def stop_validator(self):
         if self._current_task is not None:
             return self._current_task.cancel()
+        return None
 
     @asyncSlot()
     async def on_start_button(self):

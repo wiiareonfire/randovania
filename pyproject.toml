@@ -227,6 +227,9 @@ extend-ignore = [
   "SIM108",   # if-else-block-instead-of-if-exp
   "SIM118",   # in-dict-keys
   "RET505", "RET506", "RET507", "RET508",  # no autofix
+
+  "RUF009",  # causes issues with _int_field
+  "B023",  # revisit later
 ]
 
 [tool.ruff.lint.isort]

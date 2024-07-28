@@ -10,14 +10,14 @@ class CustomDiscordOAuth2Session(flask_discord.DiscordOAuth2Session):
 
     def create_session(
         self,
-        scope: list = None,
+        scope: list | None = None,
         *,
-        data: dict = None,
+        data: dict | None = None,
         prompt: bool = True,
         permissions: types.Permissions | int = 0,
         **params,
     ):
         return super().create_session(self.scope, data=data, prompt=prompt, permissions=permissions, **params)
 
-    def _make_session(self, token: str = None, state: str = None, scope: list = None) -> OAuth2Session:
+    def _make_session(self, token: str | None = None, state: str | None = None, scope: list | None = None) -> OAuth2Session:
         return super()._make_session(token=token, state=state, scope=self.scope)

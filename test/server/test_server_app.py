@@ -159,9 +159,8 @@ def test_verify_user(mocker, valid):
 
 
 def test_request_sid_none(server_app):
-    with server_app.app.test_request_context():
-        with pytest.raises(KeyError):
-            assert server_app.request_sid
+    with server_app.app.test_request_context(), pytest.raises(KeyError):
+        assert server_app.request_sid
 
 
 def test_request_sid_from_session(server_app):

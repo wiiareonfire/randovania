@@ -105,6 +105,7 @@ class PrimeRemoteConnector(RemoteConnector):
         for region in self.game.region_list.regions:
             if region.extra["asset_id"] == asset_id:
                 return region
+        return None
 
     def _current_status_world(self, world_asset_id: bytes | None, vtable_bytes: bytes | None) -> Region | None:
         """

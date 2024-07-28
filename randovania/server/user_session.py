@@ -78,10 +78,9 @@ def _create_session_with_access_token(sa: ServerApp, token: UserAccessToken) -> 
 def _create_session_with_discord_token(sa: ServerApp, sid: str | None) -> User:
     discord_user = sa.discord.fetch_user()
 
-    if sa.enforce_role is not None:
-        if not sa.enforce_role.verify_user(discord_user.id):
-            logger().info("User %s is not authorized for connecting to the server", discord_user.name)
-            raise error.UserNotAuthorizedToUseServerError
+    if sa.enforce_role is not None and not sa.enforce_role.verify_user(discord_user.id):
+        logger().info("User %s is not authorized for connecting to the server", discord_user.name)
+        raise error.UserNotAuthorizedToUseServerError
 
     user = _create_user_from_discord(discord_user)
 

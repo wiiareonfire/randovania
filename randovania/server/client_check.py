@@ -14,6 +14,7 @@ def check_client_version(version_checking: ClientVersionCheck, client_version: s
     if version_checking == ClientVersionCheck.STRICT:
         if server_version != client_version:
             return f"Incompatible client version '{client_version}', expected '{server_version}'"
+        return None
 
     elif version_checking == ClientVersionCheck.MATCH_MAJOR_MINOR:
         server = StrictVersion(server_version.split(".dev")[0])
@@ -22,6 +23,8 @@ def check_client_version(version_checking: ClientVersionCheck, client_version: s
             shorter_client = "{}.{}".format(*client.version[:2])
             shorter_server = "{}.{}".format(*server.version[:2])
             return f"Incompatible client version '{shorter_client}', expected '{shorter_server}'"
+        return None
+    return None
 
 
 def check_client_headers(expected_headers: dict[str, str], environ: dict[str, str]):
@@ -38,3 +41,4 @@ def check_client_headers(expected_headers: dict[str, str], environ: dict[str, st
         return (
             f"Incompatible client:\n{message}\n\nServer is version {randovania.VERSION}, please confirm you're updated."
         )
+    return None

@@ -460,7 +460,7 @@ def _migrate_v24(data: dict) -> dict:
             new_ammo_mapping.get(pickup, pickup) for pickup in game["starting_equipment"]["pickups"]
         ]
 
-        for area, locations in game["locations"].items():
+        for _area, locations in game["locations"].items():
             for node, item in locations.items():
                 if item in new_ammo_mapping:
                     locations[node] = new_ammo_mapping[item]
@@ -487,7 +487,7 @@ def _migrate_v25(data: dict) -> dict:
     }
 
     for game in game_modifications:
-        for area, locations in game["locations"].items():
+        for _area, locations in game["locations"].items():
             for node, item in locations.items():
                 if item == "Energy Transfer Module":
                     continue

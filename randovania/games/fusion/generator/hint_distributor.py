@@ -42,7 +42,7 @@ class FusionHintDistributor(HintDistributor):
             if hint.precision is None and hint.hint_type == HintType.LOCATION
         }
 
-        for node, hint in hints_to_replace.items():
+        for node, _hint in hints_to_replace.items():
             db_node = player_pool.game.region_list.node_by_identifier(node)
             hints_to_replace[node] = dataclasses.replace(
                 hints_to_replace[node],

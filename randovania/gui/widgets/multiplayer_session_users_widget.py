@@ -198,7 +198,7 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
             check_re=WORLD_NAME_RE,
         )
         if new_name == old_name:
-            return
+            return None
 
         if new_name is not None:
             if any(new_name == world.name for world in self._session.worlds):
@@ -207,6 +207,8 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
                 )
 
             await self._session_api.rename_world(world_uid, new_name)
+            return None
+        return None
 
     @asyncSlot()
     async def _world_delete(self, world_uid: uuid.UUID):
@@ -274,7 +276,7 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
 
         result = await async_dialog.execute_dialog(dialog)
         if result != QtWidgets.QDialog.DialogCode.Accepted:
-            return
+            return None
 
         preset = dialog.selected_preset
         new_name = dialog.world_name_edit.text().strip()
@@ -286,6 +288,7 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
 
         # Temp
         await self._session_api.create_new_world(new_name, preset, user_id)
+        return None
 
     @asyncSlot()
     async def _customize_cosmetic(self, world_uid: uuid.UUID):
@@ -450,7 +453,7 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
             unclaimed_world_item.setExpanded(True)
             unclaimed_world_item.setText(0, "Unclaimed Games")
 
-            for world_uid, world in world_by_id.items():
+            for world_uid, _world in world_by_id.items():
                 if world_uid in unclaimed_worlds:
                     self._create_world_item(world_uid, unclaimed_world_item, None).update(
                         world_by_id[world_uid],
@@ -479,3 +482,4 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
 
         for world in session.worlds:
             self._world_widgets[world.id].update(world, world_states.get(world.id))
+        return None

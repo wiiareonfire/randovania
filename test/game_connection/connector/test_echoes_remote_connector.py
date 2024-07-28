@@ -32,8 +32,7 @@ def echoes_version():
 
 @pytest.fixture(name="connector")
 def echoes_remote_connector(version: EchoesDolVersion):
-    connector = EchoesRemoteConnector(version, AsyncMock())
-    return connector
+    return EchoesRemoteConnector(version, AsyncMock())
 
 
 async def test_check_for_world_uid(connector: EchoesRemoteConnector):
@@ -83,8 +82,7 @@ async def test_get_inventory_valid(connector: EchoesRemoteConnector):
     # Setup
     items = [item for item in connector.game.resource_database.item if item.extra["item_id"] < 1000]
     connector.executor.perform_memory_operations.side_effect = lambda ops: {
-        op: struct.pack(">II", item.max_capacity, item.max_capacity)
-        for op, item in zip(ops, items, strict=True)
+        op: struct.pack(">II", item.max_capacity, item.max_capacity) for op, item in zip(ops, items, strict=True)
     }
     connector.executor.perform_single_memory_operation.return_value = b"\x00\x00\x00\x00" * 16
     _override = {
@@ -111,7 +109,7 @@ async def test_get_inventory_invalid_capacity(connector: EchoesRemoteConnector):
         op: struct.pack(
             ">II", *custom_inventory.get(item.short_name, InventoryItem(item.max_capacity, item.max_capacity))
         )
-        for op, item in zip(ops, connector.game.resource_database.item)
+        for op, item in zip(ops, connector.game.resource_database.item, strict=False)
     }
 
     # Run
@@ -128,7 +126,7 @@ async def test_get_inventory_invalid_amount(connector: EchoesRemoteConnector):
         op: struct.pack(
             ">II", *custom_inventory.get(item.short_name, InventoryItem(item.max_capacity, item.max_capacity))
         )
-        for op, item in zip(ops, connector.game.resource_database.item)
+        for op, item in zip(ops, connector.game.resource_database.item, strict=False)
     }
 
     # Run

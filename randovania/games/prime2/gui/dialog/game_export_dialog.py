@@ -174,6 +174,7 @@ class EchoesGameExportDialog(GameExportDialog, Ui_EchoesGameExportDialog):
     def input_file(self) -> Path | None:
         if self._prompt_input_file:
             return Path(self.input_file_edit.text())
+        return None
 
     @property
     def output_file(self) -> Path:
