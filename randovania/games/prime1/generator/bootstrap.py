@@ -12,6 +12,7 @@ from randovania.games.prime1.layout.prime_configuration import IngameDifficulty,
 from randovania.resolver.bootstrap import MetroidBootstrap
 
 if TYPE_CHECKING:
+    from randovania.game_description.game_database_view import ResourceDatabaseView
     from randovania.game_description.resources.resource_collection import ResourceCollection
     from randovania.game_description.resources.resource_database import ResourceDatabase
     from randovania.layout.base.base_configuration import BaseConfiguration
@@ -19,7 +20,7 @@ if TYPE_CHECKING:
 
 class PrimeBootstrap(MetroidBootstrap):
     def _get_enabled_misc_resources(
-        self, configuration: BaseConfiguration, resource_database: ResourceDatabase
+        self, configuration: BaseConfiguration, resource_database: ResourceDatabaseView
     ) -> set[str]:
         assert isinstance(configuration, PrimeConfiguration)
         enabled_resources = set()

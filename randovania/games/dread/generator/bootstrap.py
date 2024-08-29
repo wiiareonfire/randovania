@@ -10,6 +10,7 @@ if TYPE_CHECKING:
     from random import Random
 
     from randovania.game_description.db.pickup_node import PickupNode
+    from randovania.game_description.game_database_view import ResourceDatabaseView
     from randovania.game_description.game_patches import GamePatches
     from randovania.game_description.resources.resource_database import ResourceDatabase
     from randovania.game_description.resources.resource_info import ResourceGain
@@ -37,7 +38,7 @@ def is_dna_node(node: PickupNode, config: BaseConfiguration) -> bool:
 
 class DreadBootstrap(MetroidBootstrap):
     def _get_enabled_misc_resources(
-        self, configuration: BaseConfiguration, resource_database: ResourceDatabase
+        self, configuration: BaseConfiguration, resource_database: ResourceDatabaseView
     ) -> set[str]:
         assert isinstance(configuration, DreadConfiguration)
 

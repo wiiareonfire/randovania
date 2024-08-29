@@ -10,8 +10,8 @@ if TYPE_CHECKING:
     from random import Random
 
     from randovania.game_description.db.pickup_node import PickupNode
+    from randovania.game_description.game_database_view import ResourceDatabaseView
     from randovania.game_description.game_patches import GamePatches
-    from randovania.game_description.resources.resource_database import ResourceDatabase
     from randovania.generator.pickup_pool import PoolResults
     from randovania.layout.base.base_configuration import BaseConfiguration
 
@@ -26,7 +26,7 @@ def is_metroid_location(node: PickupNode, config: BaseConfiguration) -> bool:
 
 class FusionBootstrap(MetroidBootstrap):
     def _get_enabled_misc_resources(
-        self, configuration: BaseConfiguration, resource_database: ResourceDatabase
+        self, configuration: BaseConfiguration, resource_database: ResourceDatabaseView
     ) -> set[str]:
         enabled_resources = set()
         if configuration.dock_rando.is_enabled():
