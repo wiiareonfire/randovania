@@ -19,7 +19,7 @@ if TYPE_CHECKING:
     from random import Random
 
     from randovania.game_description.db.pickup_node import PickupNode
-    from randovania.game_description.game_description import GameDescription
+    from randovania.game_description.game_database_view import GameDatabaseView
     from randovania.game_description.game_patches import GamePatches
     from randovania.game_description.resources.resource_database import ResourceDatabase
     from randovania.game_description.resources.resource_info import ResourceGain
@@ -109,8 +109,8 @@ class EchoesBootstrap(MetroidBootstrap):
         return super().assign_pool_results(rng, patches, pool_results)
 
     def apply_game_specific_patches(
-        self, configuration: BaseConfiguration, game: GameDescription, patches: GamePatches
-    ) -> None:
+        self, game: GameDatabaseView, configuration: BaseConfiguration, patches: GamePatches
+    ) -> GameDatabaseView:
         assert isinstance(configuration, EchoesConfiguration)
 
         scan_visor = search.find_resource_info_with_long_name(game.resource_database.item, "Scan Visor")

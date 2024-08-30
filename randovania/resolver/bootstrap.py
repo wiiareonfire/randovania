@@ -210,7 +210,7 @@ class Bootstrap:
         for resource, quantity in static_resources.as_resource_gain():
             initial_resources.set_resource(resource, quantity)
 
-        self.apply_game_specific_patches(configuration, game, patches)
+        game = self.apply_game_specific_patches(game, configuration, patches)
 
         starting_energy, energy_per_tank = self.energy_config(configuration)
 
@@ -235,9 +235,16 @@ class Bootstrap:
         return graph, starting_state
 
     def apply_game_specific_patches(
-        self, configuration: BaseConfiguration, game: GameDescription, patches: GamePatches
-    ) -> None:
-        pass
+        self, game: GameDatabaseView, configuration: BaseConfiguration, patches: GamePatches
+    ) -> GameDatabaseView:
+        """
+        Wraps the given GameDatabaseView into a new one that respects whatever game-specific changes are present.
+        :param game:
+        :param configuration:
+        :param patches:
+        :return:
+        """
+        return game
 
     def assign_pool_results(self, rng: Random, patches: GamePatches, pool_results: PoolResults) -> GamePatches:
         return patches.assign_own_pickups(pool_results.assignment.items()).assign_extra_starting_pickups(
