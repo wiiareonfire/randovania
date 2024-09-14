@@ -150,6 +150,11 @@ def weighted_potential_actions(
     evaluated_actions: dict[Action, EvaluatedAction] = {}
     actions = player_state.potential_actions(locations_weighted)
 
+    if len(actions) == 1:
+        debug.debug_print(f"{actions[0]}")
+        debug.debug_print("Only one action, weighting skipped")
+        return {action: 1.0 for action in actions}
+
     current_uncollected = UncollectedState.from_reach(player_state.reach)
     options_considered = 0
 
