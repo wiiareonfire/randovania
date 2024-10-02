@@ -69,6 +69,8 @@ def generate_from_permalink_logic(args: Namespace) -> None:
 def generate_from_preset_logic(args: Namespace) -> None:
     if args.seed_number is None:
         args.seed_number = 0
+    elif args.seed_number < 0:
+        args.seed_number = None
 
     permalink = permalink_command.create_permalink(args)
     print(f"Permalink: {permalink.as_base64_str}")
