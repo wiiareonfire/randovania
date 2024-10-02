@@ -7,6 +7,7 @@ from typing import TYPE_CHECKING
 
 from randovania.games.game import RandovaniaGame
 from randovania.layout.versioned_preset import VersionedPreset
+from randovania.layout.generator_parameters import _PERMALINK_MAX_SEED
 
 if TYPE_CHECKING:
     from argparse import ArgumentParser, Namespace, _SubParsersAction
@@ -57,7 +58,7 @@ def create_permalink(args: Namespace) -> Permalink:
 
     seed = args.seed_number
     if seed is None:
-        seed = random.randint(0, 2**31)
+        seed = random.randint(0, _PERMALINK_MAX_SEED - 1)
 
     return Permalink.from_parameters(
         GeneratorParameters(
