@@ -57,7 +57,7 @@ def create_permalink(args: Namespace) -> Permalink:
             presets.append(versioned.get_preset())
 
     seed = args.seed_number
-    if seed is None:
+    if seed is None | seed < 0:
         seed = random.randint(0, _PERMALINK_MAX_SEED - 1)
 
     return Permalink.from_parameters(
